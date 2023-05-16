@@ -1,14 +1,14 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gabivega362/gabthebox/server/routes"
+	"github.com/gin-gonic/gin"
+)
 
 func ListenAndServe(address string) {
 	router := gin.Default()
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "Bienvenidos a GabTheBox!",
-		})
-	})
+	router.LoadHTMLGlob("./server/templates/*")
+	routes.SetRoutes(router)
 
 	router.Run(address)
 }
