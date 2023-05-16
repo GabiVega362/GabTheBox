@@ -1,0 +1,21 @@
+---
+version: '3.8'
+services:
+  database:
+    image: "postgres:alpine"
+    container_name: database
+    networks: [gabthebox]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-gabthebox}
+      POSTGRES_PASSWORD: ${DATABASE_PASS:-changeme}
+      POSTGRES_DB: ${DATABASE_NAME:-gabthebox}
+    volumes:
+      - database:/var/lib/postgresql:rw
+      - ./database:/docker-entrypoint-initdb.d:ro
+    ports: [5432:5432]
+volumes:
+  database: {}
+
+networks:
+  gabthebox: {}

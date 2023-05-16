@@ -12,6 +12,10 @@ var routesGET = map[string]func(*gin.Context){
 	},
 
 	"/login": func(ctx *gin.Context) {
-		ctx.String(200, "Esto es el login")
+		ctx.HTML(200, "login.tmpl", gin.H{})
+	},
+
+	"/register": func(ctx *gin.Context) {
+		ctx.HTML(200, "register.tmpl", gin.H{})
 	},
 }

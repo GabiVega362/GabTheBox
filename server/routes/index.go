@@ -8,7 +8,7 @@ func SetRoutes(router *gin.Engine) {
 		router.GET(path, handler)
 	}
 
-	for path, handler := range routesGET {
+	for path, handler := range routesPOST {
 		router.POST(path, handler)
 	}
 }
