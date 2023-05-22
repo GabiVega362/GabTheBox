@@ -1,4 +1,4 @@
-package cli
+package config
 
 import "flag"
 
@@ -11,7 +11,7 @@ type Args struct {
     //Database string
 }
 
-func ParseArgs() *Args {
+func parseArgs() *Args {
 	address := flag.String("address", ":8080", "Address to listen on")
 	flag.Parse()
 	
