@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt" // paquete encargado de la entrada y salida de datos por consola
-	"os" // paquete encargado de gestionar el sistema operativo
+	"os"  // paquete encargado de gestionar el sistema operativo
 
-	"github.com/gabivega362/gabthebox/server"
-	"github.com/gabivega362/gabthebox/server/config"
+	"github.com/gabivega362/gabthebox/app/server"
+	"github.com/gabivega362/gabthebox/app/config"
 )
 
 // Función de entrada al programa

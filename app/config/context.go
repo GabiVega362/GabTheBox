@@ -3,7 +3,7 @@ package config
 import (
 	"github.com/docker/docker/client" // paquete encargado de gestionar la conexión con Docker
 
-	"github.com/gabivega362/gabthebox/server/docker"
+	"github.com/gabivega362/gabthebox/app/docker"
 )
 
 // Context es la estructura que contiene las variables globales de la aplicación (argumentos, variables de entorno, clientes, etc...)

@@ -1,0 +1,34 @@
+{{template "header" .}}
+
+{{ define "card" }}
+    <div class="card">
+        <div class="title">
+            <h2>{{ .Title }}</h2>
+        </div>
+        <div class="description">
+            <p>{{ .Description }}</p>
+        </div>
+
+        {{if .Deployed}}
+        <div class="button up">
+            <span>Stop</span>
+        </div>
+        {{else}}
+        <div class="button">
+            <span>Start</span>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+
+
+<div class="cards">
+
+    {{ range .Enviroments}}
+    {{ template "card" .}}
+    {{ end }}
+
+</div>
+
+
+{{template "footer" .}}
