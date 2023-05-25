@@ -11,3 +11,23 @@
             - Las rutas POST estan definidas en [post.go](./server/routes/post.go)
             - Las plantillas HTML est'an definidas en [templates/](./server/templates/)
         - Pone a la escucha el servidor
+
+# TODO
+- [ ] Mejorar cliente de docker (Funciones personalizadas)
+- [ ] Gestion de usuarios
+    - [ ] Registro
+    - [ ] Login
+    - [ ] Logout
+    - [ ] Admin {opcional}
+- [ ] Desplegar en puerto aleatorio + link al usuario
+- [ ] Comprobar el numero de contenedores desplegados por usuario (max 1)
+- [ ] Cambiar estado a Deployed o !Deployed (idea: usar configuración de la app o memcache)
+- [ ] Revisar CSS
+
+- [ ] Generar contenedores personalizados
+- [ ] go (paralelismo)
+- [ ] Añadir test
+- [ ] Añadir documentación
+- [ ] Añadir benchmarks
+- [ ] Pasar linter
+- [ ] Pruebas de race condition

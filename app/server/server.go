@@ -8,10 +8,14 @@ import (
 )
 
 // ListenAndServe pone el servidor a la escucha en la direccion especificada. La dirección está definida dentro de la estructura context. Esta función es bloqueante, por lo que no continuará hasta que el servidor se detenga
-func ListenAndServe(ctx *config.Context) {
+func ListenAndServe(cfg *config.Config) {
 
 	// creamos un enrutador WEB con la configuración por defecto que provee el framework Gin
 	router := gin.Default()
+	// le especificamos al enrutador cual es nuestro contexto
+	router.Use(func (gctx *gin.Context) {
+		gctx.Set("Config", cfg)
+	})
 	// especificamos al enrutador donde se encuentran las plantillas HTML
 	router.LoadHTMLGlob("./app/templates/*")
 	// le especificamos donde estan los archivos estaticos (img, css,etc)
@@ -20,5 +24,5 @@ func ListenAndServe(ctx *config.Context) {
 	routes.SetRoutes(router)
 
 	// encendemos el enrutador para que maneje todas las peticiones que le llegan a la dirección especificada
-	router.Run(ctx.Args.Address)
+	router.Run(cfg.Args.Address)
 }

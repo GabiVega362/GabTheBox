@@ -14,13 +14,17 @@
             <span>Stop</span>
         </div>
         {{else}}
-        <div class="button">
-            <span>Start</span>
-        </div>
+        <form action="./lab" method="POST">
+            <input type="hidden" name="enviroment" value="{{ .Image }}">
+            {{ if .Deployed }}
+                <input class="button up" type="submit" name="action" value="Stop">
+            {{ else }}
+                <input class="button" type="submit" name="action" value="Start">
+            {{ end }}
+        </form>
         {{ end }}
     </div>
     {{ end }}
-
 
 <div class="cards">
 

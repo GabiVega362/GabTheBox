@@ -11,11 +11,11 @@ import (
 // Función de entrada al programa
 func main() {
 	// obtenemos el contexto del programa, es decir, la configuración con las variables globales(argumentos, variables de entorno, clientes, etc)
-	ctx, err := config.NewContext()
+	cfg, err := config.NewConfig()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		return
 	}
 	// ponemos el servidor a la escucha pasandole el contexto de la aplicación. Esta función es bloqueante, por lo que el servidor continuara hatsa que el servidor se detenga
-	server.ListenAndServe(ctx)
+	server.ListenAndServe(cfg)
 }
