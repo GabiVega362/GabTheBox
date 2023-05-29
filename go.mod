@@ -3,9 +3,11 @@ module github.com/gabivega362/gabthebox
 go 1.18
 
 require (
-	github.com/gin-gonic/gin v1.9.0
 	github.com/docker/docker v24.0.1+incompatible
-	)
+	github.com/gin-gonic/gin v1.9.0
+	github.com/lib/pq v1.10.9
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect

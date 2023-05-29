@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"database/sql"
 	"net/http"
 	"strings"
 
@@ -13,8 +14,6 @@ import (
 
 // Register es una estructura que contiene los datos del formulario HTML que se pasan por POST al reguistrarte
 type Register struct {
-	// Username es el nombre de usuario
-	Username string `form:"user"`
 	// Password es la password de usuario
 	Password string `form:"pass"`
 	// Email es el email de usuario
@@ -39,8 +38,42 @@ var routesPOST = map[string]func(*gin.Context){
 		var data Register
 		// Bind es una función que tiene Gin para rellenar la variable especificada entre parentesis, Bind nos obliga a hacerlo con punteros por lo que se utiliza el & el cual CREA un puntero (data)
 		gctx.Bind(&data)
-		// devuelve el codigo de estado 200 OK junto a un mensaje en texto plano
-		gctx.String(200, "Me ha llegado que el usuario "+data.Username+"con el email "+data.Email+" y contraseña "+data.Password+" se ha registrado")
+		// obtenemos la configuración del programa
+		cfg := gctx.MustGet("Config").(*config.Config)
+		// Comprobamos que el usuario no exista
+		stmt, err := cfg.Database.Prepare("SELECT id FROM users WHERE email = $1")
+		if err != nil {
+			gctx.String(http.StatusInternalServerError, "Internal Server Error = 0db01")
+			return
+		}
+		// Cierra la sentencia preparada antes de salir de la función
+		defer stmt.Close()
+		id := -1
+		err = stmt.QueryRow(data.Email).Scan(&id)
+		if err != nil && err != sql.ErrNoRows {
+			gctx.String(http.StatusInternalServerError, "Internal Server Error = 0db02")
+			return
+		} 
+		if id != -1 {
+			// si el usuario existe, redirigimos a la pagina de registro con un error
+			gctx.Redirect(http.StatusFound, "/register?error")
+			return
+		}
+		
+		// si el usuario no existe, lo creamos
+		stmt2, err := cfg.Database.Prepare("INSERT INTO users (email, password) VALUES ($1, $2)")
+		if err != nil {
+			gctx.String(http.StatusInternalServerError, "Internal Server Error = 0db03")
+			return
+		}
+		defer stmt2.Close()
+		_, err = stmt2.Exec(data.Email, data.Password)
+		if err != nil {
+			gctx.String(http.StatusInternalServerError, "Internal Server Error = 0db04")
+			return
+		}
+		// redirigimos el usuario a la pagina login
+		gctx.Redirect(http.StatusFound, "/login?success=true")
 	},
 	"/lab": func(gctx *gin.Context) {
 		// obtenemos los datos del formulario
@@ -85,6 +118,7 @@ var routesPOST = map[string]func(*gin.Context){
 					Image: params.Enviroment,
 				}, nil, nil, nil, strings.ReplaceAll(params.Enviroment, "/", "_"))
 				if err != nil {
+					panic(err)
 					gctx.String(http.StatusInternalServerError, "Internal Server Error:0x4")
 					return
 				}

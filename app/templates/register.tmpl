@@ -1,11 +1,20 @@
 {{template "header" .}}
 
-    <form action="./register" method="POST">
-        <input type="text" required name="user" placeholder="Username" />
-        <input type="email" required name="email" placeholder="Email" />
-        <input type="password" required name="pass" placeholder="Password"/>
-        <input type="password" required name="confirm" placeholder="Confirm Password"/>
-        <input type="submit" value="Resgister" />
-    </form>
+<div class="form">
+    <div class="login">
+        <h1>Sign up for free</h1>
+        <form action="./register" method="POST">
+            <div class="field-wrap">
+                <input type="email" required name="email" placeholder="Email" />
+            </div>
+            <div class="field-wrap">
+                <input type="password" required name="pass" placeholder="Password" />
+            </div>
+            <input type="password" required name="confirm" placeholder="Confirm Password" />
+
+            <input class="button" type="submit" value="Register">
+        </form>
+    </div>
+</div>
 
 {{template "footer" .}}

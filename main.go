@@ -16,6 +16,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		return
 	}
+
 	// ponemos el servidor a la escucha pasandole el contexto de la aplicación. Esta función es bloqueante, por lo que el servidor continuara hatsa que el servidor se detenga
 	server.ListenAndServe(cfg)
 }

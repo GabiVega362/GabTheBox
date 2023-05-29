@@ -14,9 +14,7 @@ body {
    background-color: #dce1df;
    background-size: cover;
    background-position: center center;
-   background-repeat: no-repeat;
    background-image: url("../images/fondo.jpg");
-   
 }
 
 /* =================================================================
@@ -75,6 +73,7 @@ body {
    background-color: #44a03d;
 }
 
+
 .cards .card .button.up {
    background-color: #d24858;
 }
@@ -83,6 +82,10 @@ body {
 /* =================================================================
                            NAVIGATION
     ================================================================ */
+
+.navigation {
+   background-color: #dce1df70;
+}
 
 .nav {
    height: 80px;
@@ -132,4 +135,111 @@ nav ul li a:visited {
    cursor: pointer;
    user-select: none;
    margin-right: 10px;
+   font-size: 19px;
+}
+
+/* =================================================================
+                           SING UP
+   ================================================================ */
+
+.form .login .button {
+   border: 0;
+   outline: none;
+   border-radius: 0;
+   padding: 15px 0;
+   font-size: 2rem;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: .1em;
+   background: #1ab188;
+   color: #ffffff;
+   transition: all 0.5s ease;
+   margin-top: 20px;
+   cursor: pointer;
+   user-select: none;
+ }
+ .form .login .button:hover, .button:focus {
+   background: #179b77;
+ }
+
+.form {
+   background: rgba(19, 35, 47, 0.9);
+   padding: 40px;
+   max-width: 600px;
+   margin: 40px auto;
+   border-radius: 4px;
+   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+ }
+
+ .form .login h1 {
+   text-align: center;
+   color: #ffffff;
+   font-weight: 300;
+   margin: 0 0 40px;
+ }
+
+ input, textarea {
+   font-size: 22px;
+   display: block;
+   width: 100%;
+   height: 100%;
+   padding: 5px 10px;
+   background: none;
+   background-image: none;
+   border: 1px solid #a0b3b0;
+   color: #ffffff;
+   border-radius: 0;
+   transition: border-color .25s ease, box-shadow .25s ease;
+ }
+
+ input:focus, textarea:focus {
+   outline: 0;
+   border-color: #1ab188;
+ }
+
+ textarea {
+   border: 2px solid #a0b3b0;
+   resize: vertical;
+ }
+ 
+ .form .login .field-wrap {
+   position: relative;
+   margin-bottom: 40px;
+ }
+
+ /* =================================================================
+                                 FOOTER
+   ================================================================ */
+.footer {
+   position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  padding-top: 20px;
+  font-size: 75%;
+  background-color: #dce1df70;
+  border-top: 1px solid black;
+}
+
+.footer .footer-text {
+   margin-left: 20px;
+}
+
+/* =================================================================
+                           INDEX
+   ================================================================ */
+
+.index {
+   color: #fff;
+   background: rgba(19, 35, 47, 0.9);
+   padding: 40px;
+   width: 80%;
+   height: auto;
+   margin: 40px auto;
+   border-radius: 4px;
+   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+   
+}
+.index p, .index h1 {
+   margin-bottom: 20px;
 }

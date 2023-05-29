@@ -3,6 +3,7 @@ default: run
 
 .PHONY: run
 run: main.go
+	@docker-compose up -d
 	@go run main.go
 
 .PHONY: deploy
