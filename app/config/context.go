@@ -3,8 +3,6 @@ package config
 import (
 	"database/sql"
 
-	"github.com/docker/docker/client" // paquete encargado de gestionar la conexión con Docker
-
 	"github.com/gabivega362/gabthebox/app/database"
 	"github.com/gabivega362/gabthebox/app/docker"
 )
@@ -14,7 +12,7 @@ type Config struct {
 	// Args es la estructura que contiene los argumentos pasados por terminal o por variables de entorno
 	Args *Args
 	// Docker es el cliente usado para gestionar contenedores a través de la API de Docker
-	Docker *client.Client
+	Docker *docker.DockerClient
 	// Cliente usado para gestionar la base de datos
 	Database *sql.DB
 }
@@ -25,7 +23,7 @@ func NewConfig() (*Config, error) {
 	args := parseArgs()
 
 	// obtenemos la conexión con  el socket de docker
-	dckr, err := docker.NewDocker()
+	dckr, err := docker.NewDockerClient()
 	if err != nil {
 		return nil, err
 	}

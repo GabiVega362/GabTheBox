@@ -22,7 +22,6 @@ func ListenAndServe(cfg *config.Config) {
 	router.Static("/static", "./app/public")
 	// añadimos las rutas(GET, POST, etc...) al enrutador
 	routes.SetRoutes(router)
-
 	// encendemos el enrutador para que maneje todas las peticiones que le llegan a la dirección especificada
 	router.Run(cfg.Args.Address)
 }

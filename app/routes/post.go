@@ -1,13 +1,9 @@
 package routes
 
 import (
-	"context"
 	"database/sql"
 	"net/http"
-	"strings"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
 	"github.com/gabivega362/gabthebox/app/config"
 	"github.com/gin-gonic/gin"
 ) // paquete para crear servidores WEB
@@ -53,13 +49,13 @@ var routesPOST = map[string]func(*gin.Context){
 		if err != nil && err != sql.ErrNoRows {
 			gctx.String(http.StatusInternalServerError, "Internal Server Error = 0db02")
 			return
-		} 
+		}
 		if id != -1 {
 			// si el usuario existe, redirigimos a la pagina de registro con un error
 			gctx.Redirect(http.StatusFound, "/register?error")
 			return
 		}
-		
+
 		// si el usuario no existe, lo creamos
 		stmt2, err := cfg.Database.Prepare("INSERT INTO users (email, password) VALUES ($1, $2)")
 		if err != nil {
@@ -75,60 +71,24 @@ var routesPOST = map[string]func(*gin.Context){
 		// redirigimos el usuario a la pagina login
 		gctx.Redirect(http.StatusFound, "/login?success=true")
 	},
+
 	"/lab": func(gctx *gin.Context) {
 		// obtenemos los datos del formulario
 		var params LabParams
 		gctx.Bind(&params)
-		// obtenemos la configuracion de la aplicación
-		cfg, exists := gctx.Get("Config")
-		if !exists {
-			gctx.String(http.StatusInternalServerError, "Internal Server Error:0x1")
-			return
-		}
-		dockerClient := cfg.(*config.Config).Docker
-
-		// comprobamos la accion (FIXME: check user, check if already deployed)
+		// obtenemos el cliente de docker desde la configuracion de la aplicaciones que hemos guardado en Gin
+		dockerClient := gctx.MustGet("Config").(*config.Config).Docker
+		// comprobamos la accion (FIXME: pass the username)
+		var err error
 		switch params.Action {
 		case "Start":
-			// obtenemos los contenedores que están en ejecucion
-			containers, err := dockerClient.ContainerList(context.Background(), types.ContainerListOptions{})
-			if err != nil {
-				gctx.String(http.StatusInternalServerError, "Internal Server Error:0x2")
-				return
-			}
-			// comprobamos si el contenedor ya está en ejecucion
-			i := 0
-			found := false
-			for i < len(containers) && !found {
-				if containers[i].Image == params.Enviroment {
-					found = true
-				}
-				i++
-			}
-			// si el contenedor no está en ejecucion lo iniciamos
-			if !found {
-				// buscamos la imagen
-				_, err := dockerClient.ImagePull(context.Background(), params.Enviroment, types.ImagePullOptions{})
-				if err != nil {
-					gctx.String(http.StatusInternalServerError, "Internal Server Error:0x3")
-					return
-				}
-				// creamos el contenedor
-				res, err := dockerClient.ContainerCreate(context.Background(), &container.Config{
-					Image: params.Enviroment,
-				}, nil, nil, nil, strings.ReplaceAll(params.Enviroment, "/", "_"))
-				if err != nil {
-					panic(err)
-					gctx.String(http.StatusInternalServerError, "Internal Server Error:0x4")
-					return
-				}
-				//iniciamos el contendor
-				err = dockerClient.ContainerStart(context.Background(), res.ID, types.ContainerStartOptions{})
-				if err != nil {
-					gctx.String(http.StatusInternalServerError, "Internal Server Error:0x5")
-					return
-				}
-			}
+			// Llamamos la funcion publica, definida en client.go para levantar una nueva instancia
+			err = dockerClient.StartLab("nobody", params.Enviroment)
+		case "Stop":
+			err = dockerClient.StopLab("nobody", params.Enviroment)
+		}
+		if err != nil {
+			gctx.String(http.StatusInternalServerError, "Internal server error: 0x20")
 		}
 		// redirigimos al usuario a la pagina del lab
 		gctx.Redirect(http.StatusFound, "/lab")
