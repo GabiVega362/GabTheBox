@@ -1,8 +1,6 @@
 package config
 
 import (
-	"database/sql"
-
 	"github.com/gabivega362/gabthebox/app/database"
 	"github.com/gabivega362/gabthebox/app/docker"
 )
@@ -14,7 +12,7 @@ type Config struct {
 	// Docker es el cliente usado para gestionar contenedores a través de la API de Docker
 	Docker *docker.DockerClient
 	// Cliente usado para gestionar la base de datos
-	Database *sql.DB
+	Database *database.DatabaseClient
 }
 
 // NewConfig devuelve un nuevo contexto de la aplicación
@@ -29,7 +27,7 @@ func NewConfig() (*Config, error) {
 	}
 
 	// obtenemos la conexión con la base de datos
-	db, err := database.NewDatabaseConn(args.DBUser, args.DBPass, args.DBName)
+	db, err := database.NewDatabaseClient(args.DBUser, args.DBPass, args.DBName)
 	if err != nil {
 		return nil, err
 	}

@@ -2,8 +2,10 @@ package config
 
 import (
 	"flag" // Paquete encargadop de gestionar los argumentos por terminal
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -16,6 +18,8 @@ type Args struct {
 	DBName string
 	DBUser string
 	DBPass string
+
+	Secret string
 }
 
 func (args *Args) CheckDefaults() *Args {
@@ -32,6 +36,15 @@ func (args *Args) CheckDefaults() *Args {
 	if strings.TrimSpace(args.DBPass) == "" {
 		args.DBPass = default_value
 	}
+	if strings.TrimSpace(args.Secret) == "" {
+		seed := rand.New(rand.NewSource(time.Now().UnixNano()))
+		charset := []rune("abdcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+		secret := make([]rune, 32)
+		for i := range secret {
+			secret[i] = charset[seed.Intn(len(charset))]
+		}
+		args.Secret = string(secret)
+	}
 	return args
 }
 
@@ -42,9 +55,11 @@ func parseArgs() *Args {
 
 	// obtenemos el argumento "-address" o ":8080" si no se ha espeecificado por terminal
 	address := flag.String("address", os.Getenv("GTB_ADDR"), "Address to listen on")
+	secret := flag.String("secret", os.Getenv("GTB_SECRET"), "Secret Key")
 	dbname := flag.String("dbname", os.Getenv("DATABASE_NAME"), "Database name")
 	dbuser := flag.String("dbuser", os.Getenv("DATABASE_USER"), "Database user")
 	dbpass := flag.String("dbpass", os.Getenv("DATABASE_PASS"), "Database password")
+
 	flag.Parse()
 
 	// creamos la estructura de argumentos
@@ -53,6 +68,7 @@ func parseArgs() *Args {
 		DBName:  *dbname,
 		DBUser:  *dbuser,
 		DBPass:  *dbpass,
+		Secret:  *secret,
 	}
 	// comprobamos que los argumentos no esten vacios y devolvemos el resultado
 	return args.CheckDefaults()

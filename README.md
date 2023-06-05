@@ -13,9 +13,10 @@
         - Pone a la escucha el servidor
 
 # TODO
-- [ ] Mejorar cliente de docker (Funciones personalizadas)
+- [X] Mejorar cliente de docker (Funciones personalizadas)
+- [X] Mejorar cliente de SQL (Funciones personalizadas)
 - [ ] Gestion de usuarios
-    - [ ] Registro
+    - [X] Registro
     - [ ] Login
     - [ ] Logout
     - [ ] Admin {opcional}
