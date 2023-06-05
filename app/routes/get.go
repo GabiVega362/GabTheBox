@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/gabivega362/gabthebox/app/docker"
 	"github.com/gin-gonic/gin"
 ) // paquete para crear servidores WEB
@@ -18,6 +20,11 @@ var routesGET = map[string]func(*gin.Context){
 		// cuando se accede a la ruta "/login"
 		// devuelve el código de estado HTTP 200 OK y la plantilla login.tmpl
 		gctx.HTML(200, "login.tmpl", gin.H{})
+	},
+
+	"/logout": func(gctx *gin.Context) {
+		gctx.SetCookie("GTBSESSID", "", -1, "/", "", false, true)
+		gctx.Redirect(http.StatusFound, "/")
 	},
 
 	"/register": func(gctx *gin.Context) {

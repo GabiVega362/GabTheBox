@@ -18,7 +18,7 @@
 - [ ] Gestion de usuarios
     - [X] Registro
     - [ ] Login
-    - [ ] Logout
+    - [X] Logout
     - [ ] Admin {opcional}
 - [ ] Desplegar en puerto aleatorio + link al usuario
 - [ ] Comprobar el numero de contenedores desplegados por usuario (max 1)
