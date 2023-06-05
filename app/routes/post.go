@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gabivega362/gabthebox/app/config"
@@ -30,7 +29,7 @@ var routesPOST = map[string]func(*gin.Context){
 		if id, err := databaseClient.UserLogin(data.User, data.Pass); err != nil {
 			gctx.Redirect(http.StatusFound, "/login?error=true")
 		} else {
-			gctx.SetCookie("GTBSESSID", fmt.Sprint(id), 3600, "/", "", false, true)
+			gctx.SetCookie("GTBSESSID", id, 3600, "/", "", false, true)
 			gctx.Redirect(http.StatusFound, "/lab")
 		}
 	},
@@ -38,6 +37,7 @@ var routesPOST = map[string]func(*gin.Context){
 		// cuando se accede a la ruta "/register" por POST
 		// obtenemos los datos del formulario y los guardamos dentro de una variable llamada data
 		var data struct {
+			User  string `form:"user"`
 			Email string `form:"email"`
 			Pass  string `form:"pass"`
 		}
@@ -46,7 +46,7 @@ var routesPOST = map[string]func(*gin.Context){
 		// obtenemos el cliente de la base de datos desde la configuracion de la aplicacion que hemos guardado en Gin
 		databaseClient := gctx.MustGet("Config").(*config.Config).Database
 		// registramos el usuario
-		if success, err := databaseClient.UserResgister(data.Email, data.Pass); err != nil {
+		if success, err := databaseClient.UserResgister(data.User, data.Email, data.Pass); err != nil {
 			// Fallo en la base de datos
 			gctx.String(http.StatusInternalServerError, "Internal Server Error: 0db3")
 		} else if !success {

@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/gabivega362/gabthebox/app/docker"
+	"github.com/gabivega362/gabthebox/app/config"
 	"github.com/gin-gonic/gin"
 ) // paquete para crear servidores WEB
 
@@ -34,13 +34,16 @@ var routesGET = map[string]func(*gin.Context){
 	},
 
 	"/lab": func(gctx *gin.Context) {
-		// cuando se accede a la ruta "/lab"
-		// devuelve el código de estado HTTP 200 OK y la plantilla lab.tmpl
-		gctx.HTML(200, "lab.tmpl", gin.H{
-			"Enviroments": []docker.Enviroment{
-				*docker.NewEnviroment("gability", "GabTheBox", "Vulnerable inviroment for learning web hacking"),
-				*docker.NewEnviroment("vulnerables/web-dvwa", "DVWA", "Damn Vulnerable Web Applications"),
-			},
-		})
+
+		databaseClient := gctx.MustGet("Config").(*config.Config).Database
+		if labs, err := databaseClient.GetAllLabs(); err != nil {
+			gctx.String(http.StatusInternalServerError, "Internal Server Error: 0db04")
+		} else {
+			// devuelve el código de estado HTTP 200 OK y la plantilla lab.tmpl
+			gctx.HTML(http.StatusOK, "lab.tmpl", gin.H{
+				"Labs": labs,
+			})
+		}
+
 	},
 }

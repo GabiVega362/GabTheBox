@@ -21,7 +21,7 @@
     - [X] Logout
     - [ ] Admin {opcional}
 - [ ] Desplegar en puerto aleatorio + link al usuario
-- [ ] Comprobar el numero de contenedores desplegados por usuario (max 1)
+- [X] Comprobar el numero de contenedores desplegados por usuario (max 1)
 - [ ] Cambiar estado a Deployed o !Deployed (idea: usar configuración de la app o memcache)
 - [ ] Revisar CSS
 

@@ -6,17 +6,17 @@
             <h2>{{ .Title }}</h2>
         </div>
         <div class="description">
-            <p>{{ .Description }}</p>
+            <p>{{ .Image }}</p>
         </div>
 
-        {{if .Deployed}}
+        {{if false}}
         <div class="button up">
             <span>Stop</span>
         </div>
         {{else}}
         <form action="./lab" method="POST">
-            <input type="hidden" name="enviroment" value="{{ .Image }}">
-            {{ if .Deployed }}
+            <input type="hidden" name="lab" value="{{ .UUID }}">
+            {{ if false }}
                 <input class="button up" type="submit" name="action" value="Stop">
             {{ else }}
                 <input class="button" type="submit" name="action" value="Start">
@@ -28,7 +28,7 @@
 
 <div class="cards">
 
-    {{ range .Enviroments}}
+    {{ range .Labs}}
     {{ template "card" .}}
     {{ end }}
 
