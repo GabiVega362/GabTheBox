@@ -16,13 +16,13 @@ CREATE TABLE IF NOT EXISTS "users" (
 CREATE TABLE IF NOT EXISTS "labs" (
   "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
   "org" VARCHAR(255) NOT NULL,
-  "enviroment" VARCHAR(255) NOT NULL,
+  "environment" VARCHAR(255) NOT NULL,
   "release" VARCHAR(255) DEFAULT 'latest',
   "description" VARCHAR(255) NOT NULL,
   "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT "pk_labs" PRIMARY KEY ("id"),
-  CONSTRAINT "uq_labs_image" UNIQUE ("org","enviroment","release")
+  CONSTRAINT "uq_labs_image" UNIQUE ("org","environment","release")
 );
 
 CREATE TABLE IF NOT EXISTS "users_labs"(

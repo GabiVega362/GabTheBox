@@ -34,10 +34,16 @@ var routesGET = map[string]func(*gin.Context){
 	},
 
 	"/lab": func(gctx *gin.Context) {
-
+		//comprobamos si esta autenticado
+		sessid, isAuthenticated := GetSessionId(gctx)
+		if !isAuthenticated {
+			gctx.Redirect(http.StatusFound, "/login")
+			return
+		}
 		databaseClient := gctx.MustGet("Config").(*config.Config).Database
-		if labs, err := databaseClient.GetAllLabs(); err != nil {
+		if labs, err := databaseClient.LabsGetAll(sessid); err != nil {
 			gctx.String(http.StatusInternalServerError, "Internal Server Error: 0db04")
+			panic(err)
 		} else {
 			// devuelve el código de estado HTTP 200 OK y la plantilla lab.tmpl
 			gctx.HTML(http.StatusOK, "lab.tmpl", gin.H{

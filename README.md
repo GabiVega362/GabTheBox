@@ -17,12 +17,14 @@
 - [X] Mejorar cliente de SQL (Funciones personalizadas)
 - [ ] Gestion de usuarios
     - [X] Registro
-    - [ ] Login
+    - [X] Login
     - [X] Logout
     - [ ] Admin {opcional}
-- [ ] Desplegar en puerto aleatorio + link al usuario
+- [ ] Desplegar en puerto aleatorio
+- [X] Link lab a user
 - [X] Comprobar el numero de contenedores desplegados por usuario (max 1)
-- [ ] Cambiar estado a Deployed o !Deployed (idea: usar configuración de la app o memcache)
+- [ ] Cambiar estado a Deployed o !Deployed
+- [X] Si ya ha deployeado una maquina no permitir deployear otra
 - [ ] Revisar CSS
 
 - [ ] Generar contenedores personalizados
@@ -33,3 +35,6 @@
 - [ ] Pasar linter
 - [ ] Pruebas de race condition
 - [ ] Middlewares
+
+## IMPORTANTE
+- [ ] Añadir archivos web a ejecutable

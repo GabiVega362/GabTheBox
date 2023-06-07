@@ -9,20 +9,14 @@
             <p>{{ .Image }}</p>
         </div>
 
-        {{if false}}
-        <div class="button up">
-            <span>Stop</span>
-        </div>
-        {{else}}
         <form action="./lab" method="POST">
             <input type="hidden" name="lab" value="{{ .UUID }}">
-            {{ if false }}
+            {{ if ne .Port 0 }}
                 <input class="button up" type="submit" name="action" value="Stop">
             {{ else }}
                 <input class="button" type="submit" name="action" value="Start">
             {{ end }}
         </form>
-        {{ end }}
     </div>
     {{ end }}
 

@@ -2,8 +2,6 @@ package docker
 
 import (
 	"context"
-	"fmt"
-	"strings"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -32,25 +30,28 @@ func NewDockerClient() (*DockerClient, error) {
 }
 
 // Funcion para levantar el laboratorio
-func (d DockerClient) StartLab(user string, image string) error {
+func (d DockerClient) StartLab(user string, image string) (string, uint16, error) {
 	// TODO: check if user has already deployed this lab
 	// forzamos la descarga de la imagen
 	if _, err := d.client.ImagePull(d.ctx, image, types.ImagePullOptions{}); err != nil {
-		return err
+		return "", 0, err
 	}
 	// creamos el contenedor
-	id, err := d.createContainer(user, image)
+	id, err := d.createContainer(image)
 	if err != nil {
-		return err
+		return "", 0, err
 	}
 	// iniciamos el contenedor
-	return d.client.ContainerStart(d.ctx, id, types.ContainerStartOptions{})
-
+	err = d.client.ContainerStart(d.ctx, id, types.ContainerStartOptions{})
+	if err != nil {
+		return "", 0, err
+	}
+	// devolvemos los datos
+	return id, 80, nil
 }
 
 // Funcion que detiene el laboratorio
-func (d DockerClient) StopLab(user string, image string) error {
-	var id string // TODO: Get the ID from the database
+func (d DockerClient) StopLab(id string) error {
 	// Paramos el contenedor si esta en ejecucion
 	if d.containerIsRunning(id) {
 		if err := d.client.ContainerStop(d.ctx, id, container.StopOptions{}); err != nil {
@@ -60,19 +61,17 @@ func (d DockerClient) StopLab(user string, image string) error {
 	// eliminamos el contenedor
 	return d.client.ContainerRemove(d.ctx, id, types.ContainerRemoveOptions{
 		Force:         true,
-		RemoveLinks:   true,
 		RemoveVolumes: true,
 	})
 }
 
 // Creamos el contenedor
-func (d DockerClient) createContainer(user string, image string) (string, error) {
+func (d DockerClient) createContainer(image string) (string, error) {
 
 	// creamos el contenedor
-	name := fmt.Sprintf("%s-%s", user, strings.ReplaceAll(image, "/", "_"))
 	response, err := d.client.ContainerCreate(d.ctx, &container.Config{
 		Image: image,
-	}, nil, nil, nil, name)
+	}, nil, nil, nil, "")
 	if err != nil {
 		return "", err
 	}

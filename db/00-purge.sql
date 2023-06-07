@@ -1,3 +1,5 @@
+DROP VIEW IF EXISTS "images";
+
 DROP TABLE IF EXISTS "users_labs";
 DROP TABLE IF EXISTS "labs";
 DROP TABLE IF EXISTS "users";
