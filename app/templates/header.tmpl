@@ -1,44 +1,42 @@
 {{define "header"}}
-    <!DOCTYPE html>
-        <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-        <head>
-            <title>GabTheBox</title>
-            <link rel="icon" href="favicon.ico" />
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta name="author" content="Gabi Vega" />
-            <meta name="copyright" content="Copyright &copy; 2023 Gabi Vega" />
-            <meta name="description" content="A CTF platform to test new CVEs and vulns" />
-            <meta name="keywords" content="ctf, cve, cpe, cvss, gabthebox, gabi, vega" />
-            <meta name="robots" content="index,follow" />
-            <meta name="revisit-after" content="30 days" />
-            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+    <title>GabTheBox</title>
+    <link rel="icon" href="favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Gabi Vega" />
+    <meta name="copyright" content="Copyright &copy; 2023 Gabi Vega" />
+    <meta name="description" content="A CTF platform to test new CVEs and vulns" />
+    <meta name="keywords" content="ctf, cve, cpe, cvss, gabthebox, gabi, vega" />
+    <meta name="robots" content="index,follow" />
+    <meta name="revisit-after" content="30 days" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-            <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="./static/css/style.css">
 
-        </head>
+</head>
 
-        <body>
-            <section class="navigation">
-                <div class="nav">
-                    <div class="logo">
-                        <img src="/static/images/logo.png" alt=""/>
-                    </div>
-                    <nav>
-                    <ul class="nav-list">
-                        <li>
-                            <a href="/lab">Lab</a>
-                        </li>
-                        <li>
-                            <a href="/login">Login</a>
-                        </li>
-                        <li>
-                            <a href="/register">Sign Up</a>
-                        </li>
-                    </ul>
-                </div>
-                </nav>
-            </section>
-{{end}}
+<body>
+    <section class="navigation">
+        <div class="nav">
+            <div class="logo">
+                <img src="/static/images/logo.png" alt="" />
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    {{ if .IsAuthenticated}}
+                        <li><a href="/lab">Labs</a></li>
+                        <li><a href="/logout">Log Out</a></li>
+                    {{ else }}
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Sign Up</a></li>
+                    {{ end }}
+                </ul>
+        </div>
+        </nav>
+    </section>
+    {{end}}

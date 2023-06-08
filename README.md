@@ -20,10 +20,10 @@
     - [X] Login
     - [X] Logout
     - [ ] Admin {opcional}
-- [ ] Desplegar en puerto aleatorio
+- [X] Desplegar en puerto aleatorio
 - [X] Link lab a user
 - [X] Comprobar el numero de contenedores desplegados por usuario (max 1)
-- [ ] Cambiar estado a Deployed o !Deployed
+- [X] Cambiar estado a Deployed o !Deployed
 - [X] Si ya ha deployeado una maquina no permitir deployear otra
 - [ ] Revisar CSS
 

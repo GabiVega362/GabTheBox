@@ -211,7 +211,6 @@ nav ul li a:visited {
                                  FOOTER
    ================================================================ */
 .footer {
-   position: fixed;
   bottom: 0;
   width: 100%;
   height: 80px;

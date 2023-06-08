@@ -1,6 +1,8 @@
 {{template "header" .}}
 
-{{ define "card" }}
+<div class="cards">
+
+    {{ range .Labs}}
     <div class="card">
         <div class="title">
             <h2>{{ .Title }}</h2>
@@ -12,18 +14,15 @@
         <form action="./lab" method="POST">
             <input type="hidden" name="lab" value="{{ .UUID }}">
             {{ if ne .Port 0 }}
+            <p>You can access de lab at <a href="http://{{ $.Host }}:{{ .Port }}/">
+                http://{{ $.Host }}:{{ .Port }}/</a>
+            </p>
                 <input class="button up" type="submit" name="action" value="Stop">
             {{ else }}
                 <input class="button" type="submit" name="action" value="Start">
             {{ end }}
         </form>
     </div>
-    {{ end }}
-
-<div class="cards">
-
-    {{ range .Labs}}
-    {{ template "card" .}}
     {{ end }}
 
 </div>

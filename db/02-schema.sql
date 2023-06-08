@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS "labs" (
   "org" VARCHAR(255) NOT NULL,
   "environment" VARCHAR(255) NOT NULL,
   "release" VARCHAR(255) DEFAULT 'latest',
+  "port" PORT NOT NULL DEFAULT 80,
   "description" VARCHAR(255) NOT NULL,
   "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

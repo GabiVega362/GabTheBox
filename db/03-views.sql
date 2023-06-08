@@ -10,5 +10,5 @@ SELECT
     L."description",
     L."org" || '/' || L."environment" || ':' || L."release" AS "image",
     UL."user",
-    "port"
+    UL."port"
 FROM "labs" L LEFT JOIN "users_labs" UL ON L."id" = UL."lab";

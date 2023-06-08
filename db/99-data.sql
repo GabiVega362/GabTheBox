@@ -1,3 +1,4 @@
-INSERT INTO "labs"("org","environment","release","description") VALUES 
-    ('vulnerables','web-dvwa','latest','Damn Vulnerable Web Application'),
-    ('vulnerables','web-bwapp','latest','An extremely Buggy Web App');
+INSERT INTO "labs"("org","environment","release","port","description") VALUES 
+    ('vulnerables','web-dvwa','latest',80,'Damn Vulnerable Web Application'),
+    ('raesene','bwapp','latest',80,'An extremely buggy web application');
+    

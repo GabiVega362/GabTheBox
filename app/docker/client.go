@@ -2,10 +2,16 @@ package docker
 
 import (
 	"context"
+	"fmt"
+	"io"
+	"math/rand"
+	"os"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
+	"github.com/docker/go-connections/nat"
 ) // paquete encargado de gestionar la conexión con Docker
 
 type DockerClient struct {
@@ -31,13 +37,15 @@ func NewDockerClient() (*DockerClient, error) {
 
 // Funcion para levantar el laboratorio
 func (d DockerClient) StartLab(user string, image string) (string, uint16, error) {
-	// TODO: check if user has already deployed this lab
 	// forzamos la descarga de la imagen
-	if _, err := d.client.ImagePull(d.ctx, image, types.ImagePullOptions{}); err != nil {
+	out, err := d.client.ImagePull(d.ctx, image, types.ImagePullOptions{})
+	if err != nil {
 		return "", 0, err
 	}
+	defer out.Close()
+	io.Copy(os.Stdout, out)
 	// creamos el contenedor
-	id, err := d.createContainer(image)
+	id, port, err := d.createContainer(image)
 	if err != nil {
 		return "", 0, err
 	}
@@ -47,7 +55,7 @@ func (d DockerClient) StartLab(user string, image string) (string, uint16, error
 		return "", 0, err
 	}
 	// devolvemos los datos
-	return id, 80, nil
+	return id, port, nil
 }
 
 // Funcion que detiene el laboratorio
@@ -66,17 +74,28 @@ func (d DockerClient) StopLab(id string) error {
 }
 
 // Creamos el contenedor
-func (d DockerClient) createContainer(image string) (string, error) {
+func (d DockerClient) createContainer(image string) (string, uint16, error) {
+	seed := rand.New(rand.NewSource(time.Now().UnixNano()))
+	port := uint16(seed.Intn(3000)) + 3000
 
 	// creamos el contenedor
 	response, err := d.client.ContainerCreate(d.ctx, &container.Config{
 		Image: image,
-	}, nil, nil, nil, "")
+	}, &container.HostConfig{
+		PortBindings: nat.PortMap{
+			"80/tcp": {
+				{
+					HostIP:   "0.0.0.0",
+					HostPort: fmt.Sprint(port),
+				},
+			},
+		},
+	}, nil, nil, "")
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 	// devolvemos el ID del nuevo contenedor creado
-	return response.ID, nil
+	return response.ID, port, nil
 }
 
 // Buscamos si el contenedor con el ID especificado esta en ejecución
