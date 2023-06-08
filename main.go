@@ -1,12 +1,16 @@
 package main
 
 import (
+	"embed"
 	"fmt" // paquete encargado de la entrada y salida de datos por consola
 	"os"  // paquete encargado de gestionar el sistema operativo
 
-	"github.com/gabivega362/gabthebox/app/server"
 	"github.com/gabivega362/gabthebox/app/config"
+	"github.com/gabivega362/gabthebox/app/server"
 )
+
+//go:embed assets/* app/templates/*
+var assets embed.FS
 
 // Función de entrada al programa
 func main() {
@@ -18,5 +22,5 @@ func main() {
 	}
 
 	// ponemos el servidor a la escucha pasandole el contexto de la aplicación. Esta función es bloqueante, por lo que el servidor continuara hatsa que el servidor se detenga
-	server.ListenAndServe(cfg)
+	server.ListenAndServe(cfg, assets)
 }
