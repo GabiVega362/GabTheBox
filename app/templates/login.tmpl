@@ -1,16 +1,24 @@
 {{template "header" .}}
-    <div class="form">
-        <div class="login">
-            <h1>Welcome back!</h1>
-            <form action="./login" method="POST">
-                <div class="field-wrap">
-                    <input type="text" name="user" placeholder="Username or Email" />
-                </div>
-                <div class="field-wrap">
-                    <input type="password" name="pass" placeholder="Password" />
-                </div>
-                <input class="button" type="submit" value="Login" />
-            </form>
+<div class="content">
+    <summary class="highlight">
+        <h2>Entrar</h2>
+        <h4>¡Nos alegramos de verte de nuevo!</h4>
+    </summary>
+
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label for="username">Usuario o Email</label>
+            <input required type="text" name="user" id="username" autofocus placeholder="gabthebox@example.com" />
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input required type="password" name="pass" id="password" autocomplete="false" />
+        </div>
+
+        <div class="form-group">
+            <input class="button" type="submit" value="Entrar" />
+        </div>
+    </form>
+</div>
 {{template "footer" .}}

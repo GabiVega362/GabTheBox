@@ -1,3 +1,7 @@
+/* =================================================================
+                            GLOBALS
+ =================================================================== */
+
 * {
    margin: 0;
    padding: 0;
@@ -11,234 +15,287 @@ body {
 }
 
 body {
-   background-color: #dce1df;
-   background-size: cover;
-   background-position: center center;
-   background-image: url("../images/fondo.jpg");
+   color: #212529;
+   background-color: #fafafa;
+   font-family: "Ubuntu", monospace;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+   transition: opacity 0.15s ease-in-out;
+}
+a:hover {
+   opacity: 0.7;
+}
+
+h1, h2, h3 {
+   font-size: 2rem;
+   margin-top: 1.5rem;
+   margin-bottom: 0.5rem;
+   font-weight: 500;
+   line-height: 1.2;
+}
+h2 {
+   font-size: 1.6rem;
+}
+h3 {
+   font-size: 1.4rem;
+}
+h4 {
+   font-weight: 400;
+}
+h1::after, h2::after, h3::after {
+   content: "";
+   display: block;
+   width: 90px;
+   height: 4px;
+   margin-top: 8px;
+   margin-bottom: 20px;
+   border-radius: 20px;
+   background-color: #88cc14;
+}
+
+.button {
+   color: white;
+   border: 1px solid #88cc14;
+   background-color: #88cc14;
+   border-radius: 0.25rem;
+   padding: 0.375rem 0.75rem;
+   line-height: 1.5;
+   opacity: 1;
+   cursor: pointer;
+   user-select: none;
+   transition:
+      color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
+}
+.button:hover {
+   background-color: #7ab318;
+   border-color: #1e7e34;
+   opacity: 1;
+}
+
+.highlight {
+   color: white;
+   background-color: #161e2d;
 }
 
 /* =================================================================
-                            CARD
+                           HEADER
+    ================================================================ */
+
+header {
+   user-select: none;
+   font-size: 1.2em;
+   background-color: #1c2538;
+   z-index: 100;
+   width: 100%;
+   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+   background-image: url(/public/assets/img/stars.svg);
+   background-repeat: repeat;
+   background-position: center center;
+   background-size: cover;
+
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 0 50px;
+}
+
+header .logo {
+   height: 85px;
+   margin: 10px 0;
+}
+header .logo img {
+   width: 100%;
+   height: 100%;
+}
+
+header nav {
+   color: #ffffff80;
+
+   display: flex;
+   align-items: center;
+}
+header nav a {
+   padding: 0 10px;
+   margin-right: 15px;
+}
+
+/* =================================================================
+                           FOOTER
+    ================================================================ */
+
+footer {
+   font-size: 1.2em;
+   color: #ffffff80;
+   background-color: #1c2538;
+   width: 100%;
+   min-height: 95px;
+   background-image: url(/public/assets/img/stars.svg);
+   background-repeat: repeat;
+   background-position: center center;
+   background-size: cover;
+   margin-bottom: 0;
+   margin-top: auto;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: space-evenly;
+   align-items: center;
+   padding: 0 30px;
+}
+footer div {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+footer a {
+   font-size: 0.9em;
+   margin-top: 5px;
+}
+footer small {
+   margin-top: 10px;
+   font-size: 0.8em;
+}
+
+/* =================================================================
+                           MAIN
+    ================================================================ */
+
+main, summary, .content {
+   width: 100%;
+   font-size: 16px;
+   padding: 20px 100px;
+   text-align: justify;
+}
+.content {
+   padding: 0;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   margin-top: 0;
+}
+main section {
+   margin: 20px 0;
+}
+main section.highlight {
+   padding: 44px 62px;
+   border-radius: 16px;
+}
+main section.half {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 1rem;
+}
+main section.half div {
+   width: 45%;
+}
+
+summary {
+   margin-top: 20px;
+   padding-bottom: 50px;
+   border-top: 1px solid #dce1df;
+   background-color: #f0f0f0;
+}
+summary.highlight {
+   margin-top: 0;
+   color: white;
+   border: 0;
+}
+
+/* =================================================================
+                           FORMS
+    ================================================================ */
+
+form {
+   width: 100%;
+   margin: 50px 0;
+   padding: 1em;
+   max-width: 960px;
+}
+form .form-group {
+   margin-bottom: 1.5rem;
+}
+form .form-group input[type="text"],
+form .form-group input[type="email"],
+form .form-group input[type="password"] {
+   display: block;
+   width: 100%;
+   height: calc(1.5em + 0.75rem + 2px);
+   padding: 0.375rem 0.75rem;
+   font-size: 1rem;
+   font-weight: 400;
+   line-height: 1.5;
+   color: #495057;
+   background-color: #fff;
+   background-clip: padding-box;
+   border: 1px solid #ced4da;
+}
+input.button {
+   font-size: 14px;
+   font-weight: 600;
+   padding: 10px;
+}
+input.button.up {
+   background-color: #d24858;
+}
+
+/* =================================================================
+                            CARDS
  =================================================================== */
 
 .cards {
    width: 100%;
    height: 100%;
-   /* FIXME: CHange to auto */
-   padding: 20px;
+   padding: 50px;
    display: flex;
    justify-content: center;
    align-items: center;
    flex-wrap: wrap;
    gap: 1rem;
 }
-
-.cards .card {
-   background-color: #fff;
-   width: 350px;
-   height: 200px;
+.cards section {
+   min-width: 350px;
+   min-height: 200px;
    text-align: left;
    padding: 15px 20px;
    border-radius: 5px;
+   background-color: inherit;
+   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+   border: 2px solid #161e2d;
+   color: #161e2d;
 
    display: flex;
    flex-direction: column;
    justify-content: flex-start;
 }
-
-.cards .card .description {
-   margin: 10px 0 15px 0;
-   text-overflow: ellipsis;
+.cards section p {
+   margin-bottom: 15px;
 }
-.cards .card form {
+.cards section p a {
+   text-decoration: underline;
+   color: #88cc14;
+}
+.cards section form {
    margin-top: auto;
 }
-
-.cards .card .button {
+.cards section form {
    width: 100%;
-   padding: 15px 20px;
-   border-radius: 5px;
-   cursor: pointer;
-   user-select: none;
-
-   color: #fafafa;
-   background-color: #4bb543;
-   font-weight: 600;
-   text-align: center;
-   font-size: 14px;
-   text-transform: capitalize;
+   margin-top: 10px;
+   margin-bottom: 0;
 }
-
-.cards .card .button:hover {
-   background-color: #44a03d;
-}
-
-
-.cards .card .button.up {
-   background-color: #d24858;
-}
-
-
-/* =================================================================
-                           NAVIGATION
-    ================================================================ */
-
-.navigation {
-   background-color: #dce1df70;
-}
-
-.nav {
-   height: 80px;
-   border-bottom: 1px solid black;
-   
-}
-
-.nav .logo img {
-   width: 150px;
-   height: 75px;
-   padding-left: 20px;
-   float: left;
-
-}
-
-.nav nav {
-   display: flex;
-   align-items: center;
-   justify-content: right;
-   height: 100%;
-
-}
-
-.nav nav ul {
-   list-style: none;
-   margin: 0;
-   padding: 0;
- }
- .nav nav ul li {
-   float: left;
-   position: relative;
-   display: flex;
-   align-items: center;
-   
- }
-
- nav ul li a,
-nav ul li a:visited {
-   height: 100%;
-   width: 120px;
-   text-align: center;  
-   padding: 10px 20px;
-   background: #262626;
-   color: #ffffff;
-   text-decoration: none;
-   border-radius: 10px;
-   cursor: pointer;
-   user-select: none;
-   margin-right: 10px;
-   font-size: 19px;
-}
-
-/* =================================================================
-                           SING UP
-   ================================================================ */
-
-.form .login .button {
-   border: 0;
-   outline: none;
-   border-radius: 0;
-   padding: 15px 0;
-   font-size: 2rem;
-   font-weight: 600;
-   text-transform: uppercase;
-   letter-spacing: .1em;
-   background: #1ab188;
-   color: #ffffff;
-   transition: all 0.5s ease;
-   margin-top: 20px;
-   cursor: pointer;
-   user-select: none;
- }
- .form .login .button:hover, .button:focus {
-   background: #179b77;
- }
-
-.form {
-   background: rgba(19, 35, 47, 0.9);
-   padding: 40px;
-   max-width: 600px;
-   margin: 40px auto;
-   border-radius: 4px;
-   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
- }
-
- .form .login h1 {
-   text-align: center;
-   color: #ffffff;
-   font-weight: 300;
-   margin: 0 0 40px;
- }
-
- input, textarea {
-   font-size: 22px;
-   display: block;
+.cards section form .button {
    width: 100%;
-   height: 100%;
-   padding: 5px 10px;
-   background: none;
-   background-image: none;
-   border: 1px solid #a0b3b0;
-   color: #ffffff;
-   border-radius: 0;
-   transition: border-color .25s ease, box-shadow .25s ease;
- }
-
- input:focus, textarea:focus {
-   outline: 0;
-   border-color: #1ab188;
- }
-
- textarea {
-   border: 2px solid #a0b3b0;
-   resize: vertical;
- }
- 
- .form .login .field-wrap {
-   position: relative;
-   margin-bottom: 40px;
- }
-
- /* =================================================================
-                                 FOOTER
-   ================================================================ */
-.footer {
-  bottom: 0;
-  width: 100%;
-  height: 80px;
-  padding-top: 20px;
-  font-size: 75%;
-  background-color: #dce1df70;
-  border-top: 1px solid black;
-}
-
-.footer .footer-text {
-   margin-left: 20px;
-}
-
-/* =================================================================
-                           INDEX
-   ================================================================ */
-
-.index {
-   color: #fff;
-   background: rgba(19, 35, 47, 0.9);
-   padding: 40px;
-   width: 80%;
-   height: auto;
-   margin: 40px auto;
-   border-radius: 4px;
-   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
-   
-}
-.index p, .index h1 {
-   margin-bottom: 20px;
 }

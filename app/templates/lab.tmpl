@@ -1,31 +1,33 @@
 {{template "header" .}}
+<div class="content">
+    <summary class="highlight">
+        <h2>Laboratorios</h2>
+        <h4>Pon a prueba tus habilidades en hacking ético y explota vulnerabilidades reales en un entorno seguro.</h4>
+    </summary>
 
-<div class="cards">
-
-    {{ range .Labs}}
-    <div class="card">
-        <div class="title">
-            <h2>{{ .Title }}</h2>
-        </div>
-        <div class="description">
-            <p>{{ .Image }}</p>
-        </div>
-
-        <form action="./lab" method="POST">
-            <input type="hidden" name="lab" value="{{ .UUID }}">
-            {{ if ne .Port 0 }}
-            <p>You can access de lab at <a href="http://{{ $.Host }}:{{ .Port }}/">
-                http://{{ $.Host }}:{{ .Port }}/</a>
+    <div class="cards">
+        {{ range .Labs }}
+        <section class="highlight">
+            <h3>{{ .Title }}</h3>
+            <p>
+                {{ if ne .Port 0 }}
+                    Laboratorio: <a href="http://{{ $.Host }}:{{ .Port }}/" target="_blank">http://{{ $.Host }}:{{ .Port }}/</a>
+                {{ else }}
+                    {{ .Image }}
+                {{ end }}
             </p>
-                <input class="button up" type="submit" name="action" value="Stop">
-            {{ else }}
-                <input class="button" type="submit" name="action" value="Start">
-            {{ end }}
-        </form>
+
+            <form action="./lab" method="POST">
+                <input type="hidden" name="lab" value="{{ .UUID }}">
+                {{ if ne .Port 0 }}
+                
+                    <input class="button up" type="submit" name="action" value="Detener">
+                {{ else }}
+                    <input class="button" type="submit" name="action" value="Encender">
+                {{ end }}
+            </form>
+        </section>
+        {{ end }}
     </div>
-    {{ end }}
-
 </div>
-
-
 {{template "footer" .}}

@@ -15,28 +15,22 @@
     <meta name="revisit-after" content="30 days" />
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <link rel="stylesheet" href="/public/assets/css/style.css">
-
 </head>
 
 <body>
-    <section class="navigation">
-        <div class="nav">
-            <div class="logo">
-                <img src="/public/assets/images/logo.png" alt="" />
-            </div>
-            <nav>
-                <ul class="nav-list">
-                    {{ if .IsAuthenticated}}
-                        <li><a href="/lab">Labs</a></li>
-                        <li><a href="/logout">Log Out</a></li>
-                    {{ else }}
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/register">Sign Up</a></li>
-                    {{ end }}
-                </ul>
-        </div>
+    <header>
+        <a class="logo" href="/">
+            <img src="/public/assets/img/logo.png" alt="GabTheBox" />
+        </a>
+        <nav>
+            {{ if .IsAuthenticated}}
+            <a href="/logout">Desconectarse</a>
+            <a class="button" href="/lab">Laboratorios</a>
+            {{ else }}
+            <a href="/login">Entrar</a>
+            <a class="button" href="/register">Registrarse</a>
+            {{ end }}
         </nav>
-    </section>
+    </header>
     {{end}}

@@ -70,7 +70,7 @@ var routesPOST = map[string]func(*gin.Context){
 		// comprobamos la accion a realizar
 		var gErr error
 		switch data.Action {
-		case "Start":
+		case "Encender":
 			// comprobamos si ya ha deployeado una
 			if _, alreadyDeployed, err := cfg.Database.LabsGetContainerByUser(sessid); err != nil || alreadyDeployed {
 				fmt.Println(alreadyDeployed, err)
@@ -96,7 +96,7 @@ var routesPOST = map[string]func(*gin.Context){
 				return
 			}
 
-		case "Stop":
+		case "Detener":
 			// obtenemos el ID del contenedor
 			container, alreadyDeployed, err := cfg.Database.LabsGetContainerByUser(sessid)
 			if err != nil {

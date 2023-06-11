@@ -1,23 +1,29 @@
 {{template "header" .}}
+<div class="content">
+    <summary class="highlight">
+        <h2>Registrarse</h2>
+        <h4>¡Estamos encantados de verte por aquí!</h4>
+    </summary>
 
-<div class="form">
-    <div class="login">
-        <h1>Sign up for free</h1>
-        <form action="./register" method="POST">
-            <div class="field-wrap">
-                <input type="text" required name="user" placeholder="Username" />
-            </div>
-            <div class="field-wrap">
-                <input type="email" required name="email" placeholder="Email" />
-            </div>
-            <div class="field-wrap">
-                <input type="password" required name="pass" placeholder="Password" />
-                <input type="password" required name="confirm" placeholder="Confirm Password" />
-            </div>
+    <form action="/register" method="POST">
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input required type="text" name="user" id="username" autofocus placeholder="GabiVega" />
+        </div>
 
-            <input class="button" type="submit" value="Register">
-        </form>
-    </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input required type="email" name="email" id="email" placeholder="gabthebox@example.com" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input required type="password" name="pass" id="password" autocomplete="false" />
+        </div>
+
+        <div class="form-group">
+            <input class="button" type="submit" value="Registrarse" />
+        </div>
+    </form>
 </div>
-
 {{template "footer" .}}
